@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.view.KeyEvent;
 import android.widget.RelativeLayout;
 
 import com.facebook.react.bridge.Arguments;
@@ -155,4 +156,32 @@ public class YouTubeView extends RelativeLayout {
     public void setFullscreen(Boolean bool) {
         youtubeController.setFullscreen(bool);
     }
+
+    //VAMP-805 - React-native-youtube: Sometimes UI controls do not show on Android
+    //must use a real device, on the emulator I can not play the video (and can not reproduce the bug)
+    //open NZI Companion App with js file modified
+    //config/state/app-android-production.js
+    //you can change videoid here
+    //"content": {
+    //    "videoId": "lJ5Ab-xATrE"
+    //}
+    //steps to reproduce the bug
+    //1. open the app
+    //2. press full screen
+    //3. go back and see that the controller is missing
+    @Override
+    public void requestLayout() {
+        super.requestLayout();
+        post(measureAndLayout);
+    }
+
+    private final Runnable measureAndLayout = new Runnable() {
+        @Override
+        public void run() {
+            measure(MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY));
+            layout(getLeft(), getTop(), getRight(), getBottom());
+        }
+    };
+
 }
