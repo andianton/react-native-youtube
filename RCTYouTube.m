@@ -51,9 +51,9 @@
         
         //avoid things like close app when in fullscreen then reopen app
         NSString *garbageFound = [[NSUserDefaults standardUserDefaults]
-                                stringForKey:@"NZZVampDNIyoutubeVideoEnterFullScreen"];
+                                stringForKey:@"RCTNativeYoutubeVideoEnterFullScreen"];
         if(garbageFound){ //cleanup
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NZZVampDNIyoutubeVideoEnterFullScreen"];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"RCTNativeYoutubeVideoEnterFullScreen"];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
     }
@@ -98,7 +98,7 @@
         _enteredFullScreen = YES;
         
         //save the fullscreenmode in nsuserdefaults in order to be reusable from the main app
-        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"NZZVampDNIyoutubeVideoEnterFullScreen"];
+        [[NSUserDefaults standardUserDefaults] setObject:@"YES" forKey:@"RCTNativeYoutubeVideoEnterFullScreen"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     if ((UIWindow*)notification.object != self.window && _enteredFullScreen) {
@@ -111,7 +111,7 @@
         _enteredFullScreen = NO;
         
         //remove fullscreen notification from nsuserdefaults
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NZZVampDNIyoutubeVideoEnterFullScreen"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"RCTNativeYoutubeVideoEnterFullScreen"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
